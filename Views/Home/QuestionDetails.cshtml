@@ -1,0 +1,119 @@
+﻿@model FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models.Question
+
+@{
+    ViewData["Title"] = "QuestionDetails";
+}
+
+<h1>QuestionDetails</h1>
+@if(ViewBag.Message != null)
+{
+    <h3 style="color:red;">@ViewBag.Message</h3>
+}
+<div>
+    <h4>Question</h4>
+    <form method="post" asp-action="VoteQuestionOrAnswer" asp-route-questionId="@Model.Id" asp-route-upOrDown="up">
+        <button type="submit">UpVote</button>
+    </form>
+    @{
+    var totalVoteQuestionValue = Model.UpVote + Model.DownVote;
+    <span>@totalVoteQuestionValue</span>
+    }
+    <form method="post" asp-action="VoteQuestionOrAnswer" asp-route-questionId="@Model.Id" asp-route-upOrDown="down">
+        <button type="submit">DownVote</button>
+    </form>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Body)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Body)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DateOfCreate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DateOfCreate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.User.UserName)
+            <span style="font-size:10px; color:blue;">reputation: @Model.User.Reputation</span>
+        </dd>
+    </dl>
+</div>
+<hr />
+<h4>Answers</h4>
+<div>
+@{
+    if(Model.Answers != null)
+    {
+        foreach (var answer in Model.Answers)
+        {   
+            if (!Model.Answers.Any(a => a.IsCorrect))
+            {
+                <form method="post" asp-action="MarkAsCorrect" asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId">
+                    <button type="submit">MarkAsCorrect</button>
+                </form>
+            }
+            <form method="post" asp-action="VoteQuestionOrAnswer"  asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" asp-route-upOrDown="up">
+                <button type="submit">UpVote</button>
+            </form>
+            var totalVoteValue = answer.UpVote + answer.DownVote;
+            <span>@totalVoteValue</span>
+            <form method="post" asp-action="VoteQuestionOrAnswer" asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" asp-route-upOrDown="down">
+                <button type="submit">DownVote</button>
+            </form>
+
+            <p style="font-size:20px; color:purple;">
+            @if(answer.IsCorrect)
+            {
+                <input type="checkbox" id="isCorrect" name="isCorrect" value="true" checked readonly>
+            }
+            @answer.AnswerContent
+            <span style="font-size:10px; color:blue;">answered by @answer.User.UserName</span>
+            <span style="font-size:10px; color:green;">reputation: @answer.User.Reputation</span>
+            </p>
+            if(answer.Comments != null)
+            {
+                foreach (var comment in answer.Comments)
+                {
+                    <p style="margin-left:1rem;">@comment.ContentOfComment</p>
+                }
+                
+            }
+            <hr />
+        }
+    }
+}
+</div>
+<hr />
+<h5>Tags</h5>
+<div>
+    @if(Model.QuestionTags != null)
+    {
+        foreach (var questionTag in Model.QuestionTags)
+        {
+           <a asp-action="ShowAllQuestionsByTag" asp-route-tagId="@questionTag.TagId">@questionTag.Tag.Name</a>
+        }
+    }
+</div>
+<hr />
+<div>
+    <form method="post" asp-action="PostAAnswer" asp-route-questionId="@Model.Id">
+        <textarea name="answerContent" rows=10 cols=30></textarea><br />
+        <button type="submit" >PostYourAnswer</button>
+    </form>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

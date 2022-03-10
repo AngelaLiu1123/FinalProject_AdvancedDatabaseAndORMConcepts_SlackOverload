@@ -1,0 +1,62 @@
+﻿@model IEnumerable<Question>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<h1>@ViewData["Title"]</h1>
+<div>
+    <a asp-action="PostNewQuestion">Ask Question</a>
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                NumberOfAnswers
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfClose)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if(Model != null)
+        {
+            @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Answers.Count)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfCreate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateOfClose)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.User.UserName)
+                    <span style="font-size:10px; color:blue;">reputation: @item.User.Reputation</span>
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="QuestionDetails" asp-route-questionId="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr> 
+        }
+}
+    </tbody>
+</table>

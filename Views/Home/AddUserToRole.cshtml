@@ -1,0 +1,10 @@
+﻿<h1>AddUserToRole</h1>
+@if (ViewBag.Message != null)
+{
+    <h4 style="color:red">@ViewBag.Message</h4>
+}
+<form method="post" asp-action="AddUserToRole">
+    <select name="userId" asp-items="@ViewBag.UserNames"></select>
+    <select name="roleId" asp-items="@ViewBag.RoleNames"></select>
+    <button type="submit">Submit</button>
+</form>

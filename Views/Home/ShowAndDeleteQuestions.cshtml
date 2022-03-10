@@ -1,0 +1,61 @@
+﻿@model IEnumerable<FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models.Question>
+
+@{
+    ViewData["Title"] = "ShowAndDeleteQuestions";
+}
+
+<h1>ShowAndDeleteQuestions</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfCreate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateOfClose)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UpVote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DownVote)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.User)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfCreate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfClose)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpVote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DownVote)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                <a asp-action="QuestionDetails" asp-route-questionId="@item.Id">Details</a> |
+                <a asp-action="DeleteQuestion" asp-route-questionId="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

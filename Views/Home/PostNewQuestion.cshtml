@@ -1,0 +1,83 @@
+﻿@model FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.ViewModels.TagVM
+
+@{
+    ViewData["Title"] = "PostNewQuestion";
+}
+
+<h1>PostNewQuestion</h1>
+<h4>Question</h4>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css" rel="stylesheet" />
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css" rel="stylesheet" />
+<link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.css" rel="stylesheet" />
+<link rel="stylesheet" href="/richtexteditor/rte_theme_default.css" />
+<script type="text/javascript" src="/richtexteditor/rte.js"></script>
+<script type="text/javascript" src='/richtexteditor/plugins/all_plugins.js'></script>
+
+<hr/>
+
+<div class="row">
+    <div class="col-md-4">
+        
+        @using (Html.BeginForm("PostNewQuestion", "Home", FormMethod.Post))
+        {
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label name="title" class="control-label">Title:</label>
+                <input name="title" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label name="body" class="control-label">Body:</label>
+                <textarea id="editor" name="body" class="form-control" rows=10 cols=10></textarea>
+            </div>
+            @Html.LabelFor(m => m.SelectedTags,"Please Select your Tags") <br/>
+            @Html.ListBoxFor(m => m.SelectedTags, Model.AllTags, new {@class="chosen", multiple="multiple", style="width:150px;"})
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>            
+        }
+
+    </div>
+</div>
+<div id="div_editor1">
+	<p>This is a default toolbar demo of Rich text editor.</p>
+	<p><img src='/images/editor-image.png' /></p>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            $('.chosen').chosen({
+                max_selected_options: 2
+            });
+
+            $(".chosen-deselect").chosen(
+            {
+                allow_single_deselect: true 
+            });
+
+            $(".chosen").chosen().change();
+            $(".chosen").trigger('liszt:updated');
+        });
+
+        $(function () {
+            $(#"edit").editable({
+                inlineMode: false
+            })
+        });
+
+
+	var editor1 = new RichTextEditor("#div_editor1");
+	//editor1.setHTMLCode("Use inline HTML or setHTMLCode to init the default content.");
+
+    </script>
+}
