@@ -1,30 +1,33 @@
-﻿@using Syncfusion.EJ2
-@*
-@using EJ2MVCSampleBrowser.Models
-*@
+﻿<!--Using Summernote in Dot net 6 -->
 
-@section ControlsSection{
-    <div class="control-section">
-        <div class="control-wrapper">
-            @Html.EJS().RichTextEditor("default").ContentTemplate(@<div>
-                <p>
-                    The Rich Text Editor component is a WYSIWYG ('what you see is what you get') editor that provides the best user experience to create and update the content.
-                    Users can format their content using standard toolbar commands.
-                </p>
-                <p><b> Key features:</b></p>
-                <ul>
-                    <li><p> Provides &lt; IFRAME &gt; and &lt; DIV &gt; modes </p></li>
-                    <li><p> Capable of handling markdown editing.</p></li>
-                    <li><p> Contains a modular library to load the necessary functionality on demand.</p></li>
-                    <li><p> Provides a fully customizable toolbar.</p></li>
-                    <li><p> Provides HTML view to edit the source directly for developers.</p></li>
-                    <li><p> Supports third - party library integration.</p></li>
-                    <li><p> Allows a preview of modified content before saving it.</p></li>
-                    <li><p> Handles images, hyperlinks, video, hyperlinks, uploads, etc.</p></li>
-                    <li><p> Contains undo/redo manager.</p></li>
-                    <li><p> Creates bulleted and numbered lists.</p></li>
-                </ul>
-            </div>).Render()
-        </div>
-    </div>
+<!--All CSS stylesheet go at the top of the page-->
+<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+
+<!--The place you want to have the text editor to be in I chose a form you can have input or even a div add summernote as the id-->
+<form asp-method="post" asp-action="RichTextEditor">
+    <textarea id="summernote" placeholder="text" name="text">
+    </textarea>
+    <button type="submit">
+        Submit
+    </button>
+</form>
+<!--Add Scripts in this section -->
+@section Scripts {
+        <!--JQuery and Bootstrap scripts come first-->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+     <!-- Then add summernote script-->
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <!-- Then add the final script-->
+    <script>
+    $(document).ready(function() {
+        $('#summernote').summernote({
+          height: 600,                 // set editor height
+          minHeight: null,             // set minimum height of editor
+          maxHeight: null,             // set maximum height of editor
+          focus: true                  // set focus to editable area after initializing summernote
+        });
+    });
+    </script>
 }

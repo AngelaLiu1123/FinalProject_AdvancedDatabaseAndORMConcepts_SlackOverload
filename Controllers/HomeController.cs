@@ -49,8 +49,17 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
             return View(await PaginatedList<Question>.CreateAsync(mostRecentQuestions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        //test
         public IActionResult RichTextEditor()
         {
+            return View();
+        }
+
+        //test
+        [HttpPost]
+        public IActionResult RichTextEditor(string text)
+        {
+            string content = text;
             return View();
         }
 

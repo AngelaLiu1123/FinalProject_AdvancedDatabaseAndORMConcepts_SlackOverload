@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload", "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.csproj", "{2E91AE04-8239-4E8A-8CDA-BBC7D5C142AE}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Class2-ModelBindingAndValidation", "..\Class2-ModelBindingAndValidation\Class2-ModelBindingAndValidation.csproj", "{E5215434-B709-498F-BB29-808AFE8463F0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload", "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.csproj", "{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,19 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{2E91AE04-8239-4E8A-8CDA-BBC7D5C142AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2E91AE04-8239-4E8A-8CDA-BBC7D5C142AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2E91AE04-8239-4E8A-8CDA-BBC7D5C142AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2E91AE04-8239-4E8A-8CDA-BBC7D5C142AE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E5215434-B709-498F-BB29-808AFE8463F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E5215434-B709-498F-BB29-808AFE8463F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E5215434-B709-498F-BB29-808AFE8463F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E5215434-B709-498F-BB29-808AFE8463F0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4029A47F-540E-4BFF-AB4F-51F80916F07C}
+		SolutionGuid = {54A933BB-F92D-4246-8357-D4F1B09F185E}
 	EndGlobalSection
 EndGlobal
