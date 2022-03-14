@@ -52,8 +52,12 @@
                 @Html.DisplayFor(modelItem => item.User.UserName)
             </td>
             <td>
-                <a asp-action="QuestionDetails" asp-route-questionId="@item.Id">Details</a> |
-                <a asp-action="DeleteQuestion" asp-route-questionId="@item.Id">Delete</a>
+                <form style="display:inline-block;" method="post" asp-action="QuestionDetails" asp-route-questionId="@item.Id">
+                    <button type="submit" >Details</button>
+                </form>
+                <form style="display:inline-block;" method="post" asp-action="DeleteQuestion" asp-route-questionId="@item.Id">
+                    <button type="submit" >Delete</button>
+                </form>
             </td>
         </tr>
 }

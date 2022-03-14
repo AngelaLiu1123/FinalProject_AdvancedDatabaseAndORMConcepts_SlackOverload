@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Question>
+﻿@model PaginatedList<FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models.Question>
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,24 +7,35 @@
 <h1>@ViewData["Title"]</h1>
 <div>
     <a asp-action="PostNewQuestion">Ask Question</a>
+    <a asp-action="Index" asp-route-sortOrder="Newest">Newest</a>
+    <a asp-action="Index" asp-route-sortOrder="Active">Active</a>
 </div>
+
+@using (Html.BeginForm("Index", "Home", FormMethod.Get))
+{
+    <p>
+        Find by Title: @Html.TextBox("SearchString", ViewBag.CurrentFilter as string)
+        <input type="submit" value="Search" />
+    </p>
+}
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Title)
+                Title
             </th>
             <th>
                 NumberOfAnswers
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfCreate)
+                DateOfCreate
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateOfClose)
+                DateOfClose
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.User)
+                User
             </th>
             <th></th>
         </tr>
@@ -48,15 +59,40 @@
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.User.UserName)
-                    <span style="font-size:10px; color:blue;">reputation: @item.User.Reputation</span>
+                    @if(@item.User.Reputation !=null)
+                    {
+                        <span style="font-size:10px; color:blue;">reputation: @item.User.Reputation</span>
+                    }
+                    
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="QuestionDetails" asp-route-questionId="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    <a asp-action="QuestionDetails" asp-route-questionId="@item.Id">Details</a>
                 </td>
             </tr> 
         }
 }
     </tbody>
 </table>
+<br />
+
+@{
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+Page @(Model.TotalPages < Model.PageIndex ? 0 : Model.PageIndex) of @Model.TotalPages
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-action="Index"
+   asp-route-sortOrder="@ViewData["CurrentSort"]"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   asp-route-currentFilter="@ViewData["CurrentFilter"]"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
+ 

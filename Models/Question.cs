@@ -25,13 +25,16 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models
             this.UserId = userId;
             this.DateOfCreate = DateTime.Now;
 
-            this.QuestionTags = new HashSet<QuestionTag>();
-            this.Answers = new HashSet<Answer>();
-            this.Comments = new HashSet<Comment>();
+            QuestionTags = new HashSet<QuestionTag>();
+            Answers = new HashSet<Answer>();
+            Comments = new HashSet<Comment>();
         }
 
         public Question()
         {
+            QuestionTags = new HashSet<QuestionTag>();
+            Answers = new HashSet<Answer>();
+            Comments = new HashSet<Comment>();
         }
     }
 }

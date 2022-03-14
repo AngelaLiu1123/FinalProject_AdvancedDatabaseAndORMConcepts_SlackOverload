@@ -11,14 +11,14 @@
 }
 <div>
     <h4>Question</h4>
-    <form method="post" asp-action="VoteQuestionOrAnswer" asp-route-questionId="@Model.Id" asp-route-upOrDown="up">
+    <form style="display:inline-block;" method="post" asp-action="VoteQuestionOrAnswer" asp-route-questionId="@Model.Id" asp-route-upOrDown="up">
         <button type="submit">UpVote</button>
     </form>
     @{
     var totalVoteQuestionValue = Model.UpVote + Model.DownVote;
     <span>@totalVoteQuestionValue</span>
     }
-    <form method="post" asp-action="VoteQuestionOrAnswer" asp-route-questionId="@Model.Id" asp-route-upOrDown="down">
+    <form style="display:inline-block;" method="post" asp-action="VoteQuestionOrAnswer" asp-route-questionId="@Model.Id" asp-route-upOrDown="down">
         <button type="submit">DownVote</button>
     </form>
     <hr />
@@ -48,6 +48,22 @@
             @Html.DisplayFor(model => model.User.UserName)
             <span style="font-size:10px; color:blue;">reputation: @Model.User.Reputation</span>
         </dd>
+        @if (@Model.Comments.Any())
+        {
+            <h5>Comments:</h5>
+            
+            foreach (var comment in @Model.Comments)
+            {
+
+                <span style="font-size:10px;margin-left:1rem;">@comment.ContentOfComment</span>
+
+            }
+        }
+        <form method="post" asp-action="AddAComment" asp-route-questionId="@Model.Id">
+                <textarea name="comment" rows=1 cols=20></textarea><br />
+                <button type="submit" >AddAComment</button>
+        </form>
+
     </dl>
 </div>
 <hr />
@@ -64,12 +80,12 @@
                     <button type="submit">MarkAsCorrect</button>
                 </form>
             }
-            <form method="post" asp-action="VoteQuestionOrAnswer"  asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" asp-route-upOrDown="up">
+            <form style="display:inline-block;" method="post" asp-action="VoteQuestionOrAnswer"  asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" asp-route-upOrDown="up">
                 <button type="submit">UpVote</button>
             </form>
             var totalVoteValue = answer.UpVote + answer.DownVote;
             <span>@totalVoteValue</span>
-            <form method="post" asp-action="VoteQuestionOrAnswer" asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" asp-route-upOrDown="down">
+            <form style="display:inline-block;" method="post" asp-action="VoteQuestionOrAnswer" asp-route-answerId="@answer.Id" asp-route-questionId="@answer.QuestionId" asp-route-upOrDown="down">
                 <button type="submit">DownVote</button>
             </form>
 
@@ -86,10 +102,14 @@
             {
                 foreach (var comment in answer.Comments)
                 {
-                    <p style="margin-left:1rem;">@comment.ContentOfComment</p>
+                    <p style="font-size:10px;margin-left:1rem;">@comment.ContentOfComment</p>
                 }
                 
             }
+            <form method="post" asp-action="AddAComment" asp-route-answerId="@answer.Id" asp-route-questionId="@Model.Id">
+                <textarea name="comment" rows=1 cols=20></textarea><br />
+                <button type="submit" >AddAComment</button>
+            </form>
             <hr />
         }
     }
@@ -114,6 +134,5 @@
     </form>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

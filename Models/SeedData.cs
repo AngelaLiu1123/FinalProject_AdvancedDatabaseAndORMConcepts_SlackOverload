@@ -12,6 +12,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models
             var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
+            //insert some seed data(user/role) into Database if there are any user and roles in it.
             if (!context.Roles.Any())
             {
                 List<string> roles = new List<string>
@@ -41,26 +42,26 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models
 
                 ApplicationUser seedUser2 = new ApplicationUser()
                 {
-                    Email = "sherryxu@163.com",
-                    NormalizedEmail = "SHERRYXU@163.COM",
-                    UserName = "sherryxu@163.com",
-                    NormalizedUserName = "SHERRYXU@163.COM",
+                    Email = "test@163.com",
+                    NormalizedEmail = "TEST@163.COM",
+                    UserName = "test@163.com",
+                    NormalizedUserName = "TEST@163.COM",
                     EmailConfirmed = true,
                 };
 
                 ApplicationUser seedUser3 = new ApplicationUser()
                 {
-                    Email = "mingtianxu@163.com",
-                    NormalizedEmail = "MINGTIANXU@163.COM",
-                    UserName = "mingtianxu@163.com",
-                    NormalizedUserName = "MINGTIANXU@163.COM",
+                    Email = "test2@163.com",
+                    NormalizedEmail = "TEST2@163.COM",
+                    UserName = "test2@163.com",
+                    NormalizedUserName = "TEST2@163.COM",
                     EmailConfirmed = true,
                 };
 
                 var password = new PasswordHasher<ApplicationUser>();
-                var hashed = password.HashPassword(seedUser1, "P@ssord1");
-                var hashed2 = password.HashPassword(seedUser2, "P@ssord1");
-                var hashed3 = password.HashPassword(seedUser3, "P@ssord1");
+                var hashed = password.HashPassword(seedUser1, "P@ssword1");
+                var hashed2 = password.HashPassword(seedUser2, "P@ssword1");
+                var hashed3 = password.HashPassword(seedUser3, "P@ssword1");
                 seedUser1.PasswordHash = hashed;
                 seedUser2.PasswordHash = hashed2;
                 seedUser3.PasswordHash = hashed3;
@@ -72,20 +73,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models
                 await userManager.AddToRoleAsync(seedUser1, "Admin");
                 await userManager.AddToRoleAsync(seedUser2, "User");
                 await userManager.AddToRoleAsync(seedUser3, "User");
-                context.SaveChanges();
-
-                //if (!context.Journal.Any())
-                //{
-                //    Journal journal1 = new Journal(seedUser1.UserName, "water my flower");
-                //    Journal journal2 = new Journal(seedUser2.UserName, "feed my cat");
-                //    Journal journal3 = new Journal(seedUser3.UserName, "wash my car");
-
-                //    List<Journal> journals = new List<Journal> { journal1, journal2, journal3 };
-                //    context.Journal.AddRange(journals);
-                //    context.SaveChanges();
-                //}
             }
-
 
             await context.SaveChangesAsync();
         }
