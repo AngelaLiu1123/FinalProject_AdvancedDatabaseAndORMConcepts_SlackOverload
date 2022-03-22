@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload", "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.csproj", "{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload", "FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.csproj", "{D7619CD9-D818-4113-8BC1-E3ACB8FC873E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AC69C592-5FE2-4E55-BE4F-DA7DD870D7CD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7619CD9-D818-4113-8BC1-E3ACB8FC873E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7619CD9-D818-4113-8BC1-E3ACB8FC873E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7619CD9-D818-4113-8BC1-E3ACB8FC873E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7619CD9-D818-4113-8BC1-E3ACB8FC873E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {54A933BB-F92D-4246-8357-D4F1B09F185E}
+		SolutionGuid = {A25434D7-8B8B-42F1-8CE3-B3085D4726AD}
 	EndGlobalSection
 EndGlobal

@@ -27,7 +27,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
         [AllowAnonymous]  //Except for index page(User who don't log in still can access index page)
         public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
         {
-            ViewData["CurrentFilter"] = searchString;
+            ViewData["CurrentFilter"] = searchString; 
             int pageSize = 10;//the max value is 10 records in every page
             var questions = _db.Questions.Include(q => q.User).Include(q => q.Answers);
             if (searchString != null)
@@ -47,20 +47,6 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
 
             var mostRecentQuestions = questions.OrderByDescending(q => q.DateOfCreate);
             return View(await PaginatedList<Question>.CreateAsync(mostRecentQuestions.AsNoTracking(), pageNumber ?? 1, pageSize));
-        }
-
-        //test
-        public IActionResult RichTextEditor()
-        {
-            return View();
-        }
-
-        //test
-        [HttpPost]
-        public IActionResult RichTextEditor(string text)
-        {
-            string content = text;
-            return View();
         }
 
         [Authorize(Roles = "Admin")] 
@@ -242,7 +228,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
                                     message = "Sorry! You can't vote your own Answers.",
                                 });
                         }
-                        ApplicationUser answeredUserToVote = answerToVote.Question.User;
+                        ApplicationUser answeredUserToVote = answerToVote.User;
                         if (upOrDown == "up")
                         {
                             answerToVote.UpVote += 1;
@@ -291,9 +277,21 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
         }
 
         [HttpPost]
-        public IActionResult MarkAsCorrect(int questionId, int answerId)
+        public async Task<IActionResult> MarkAsCorrect(int questionId, int answerId)
         {
             //show the correct answer on the top of answer list and have some indicator
+            ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+            Question questionToMark = _db.Questions.Include(q => q.User).First(q => q.Id == questionId);
+            ApplicationUser userOfQuestion = questionToMark.User;
+            if (userOfQuestion.Id != currentUser.Id)
+            {
+                return RedirectToAction("QuestionDetails",
+                    new
+                    {
+                        questionId = questionId,
+                        message = "Sorry! You can't mark the answer as correct since you are not the question onwer.",
+                    });
+            }
             Answer correctAnswer = _db.Answers.Include(a => a.Question).ThenInclude(q => q.User).First(a => a.Id == answerId);
             correctAnswer.IsCorrect = true;
             _db.SaveChanges();

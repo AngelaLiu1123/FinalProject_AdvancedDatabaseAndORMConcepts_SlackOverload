@@ -9,10 +9,5 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.ViewModels
         public IEnumerable<SelectListItem> AllTags { get; set; }
         public Question Question { get; set; }
 
-        //public SelectedTag(SelectList allTags)
-        //{
-        //    this.SelectedTags = new string[3];
-        //    this.AllTags = allTags;
-        //}
     }
 }
