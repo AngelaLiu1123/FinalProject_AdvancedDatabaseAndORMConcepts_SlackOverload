@@ -14,17 +14,17 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models
 
             this.AddRange(items);         // add the items to PaginatedList
         }
-
+        //check if the previousPage or NextPage button is avalabile
         public bool HasPreviousPage => PageIndex > 1;  //if pageIndex >1, HasPreviousPage = true, else false;
 
         public bool HasNextPage => PageIndex < TotalPages; //if HasNextPage < TotalPages, HasNextPage = true, else false;
 
-        //get the items of current page
+        //Static method:get the List of items of current page
         public static async Task<PaginatedList<T>> CreateAsync(IQueryable<T> source, int pageIndex, int pageSize)
         {
-            var count = await source.CountAsync();
-            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(); //get the items of current page
-            return new PaginatedList<T>(items, count, pageIndex, pageSize);
+            var count = await source.CountAsync();//total items count
+            var items = await source.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync(); //return a List containing only the requested page; eg: page 1 -> take(1-10) items
+            return new PaginatedList<T>(items, count, pageIndex, pageSize);//call the constructor method and return the List of items
         }
     }
 

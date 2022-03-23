@@ -25,30 +25,35 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
         }
 
         [AllowAnonymous]  //Except for index page(User who don't log in still can access index page)
-        public async Task<IActionResult> Index(string sortOrder, string currentFilter, string searchString, int? pageNumber)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber)
         {
-            ViewData["CurrentFilter"] = searchString; 
+            //ViewData["CurrentFilter"] = searchString; 
             int pageSize = 10;//the max value is 10 records in every page
             var questions = _db.Questions.Include(q => q.User).Include(q => q.Answers);
+            //get filter items when search string is not null
             if (searchString != null)
             {
                 var searchedQuestion = questions.Where(q => q.Title.Contains(searchString));
-                return View(await PaginatedList<Question>.CreateAsync(searchedQuestion.AsNoTracking(), pageNumber ?? 1, pageSize));
+
+                //converts the question query to a single page of Questions in a collection type that supports paging.
+                return View(await PaginatedList<Question>.CreateAsync(searchedQuestion.AsNoTracking(), pageNumber ?? 1, pageSize)); //if pageNumber is null, pageNumber=1,else pageNumber = pageNumber
             }
-            
+            //order by Active question or Newest question(default)
             if (sortOrder != null)
             {
                 if (sortOrder == "Active")
                 {
-                    var mostActiveQuestions = questions.OrderByDescending(q => q.Answers.Count);
+                    var mostActiveQuestions = questions.OrderByDescending(q => q.Answers.Count);//order by count of answers
                     return View(await PaginatedList<Question>.CreateAsync(mostActiveQuestions.AsNoTracking(), pageNumber ?? 1, pageSize));
                 }
             }
 
-            var mostRecentQuestions = questions.OrderByDescending(q => q.DateOfCreate);
+            var mostRecentQuestions = questions.OrderByDescending(q => q.DateOfCreate);//order by DateOfCreate of questions
             return View(await PaginatedList<Question>.CreateAsync(mostRecentQuestions.AsNoTracking(), pageNumber ?? 1, pageSize));
         }
 
+        //Home/CreateRole
+        //Only Admin role can createRole
         [Authorize(Roles = "Admin")] 
         public IActionResult CreateRole()
         {
@@ -81,6 +86,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
             return View();
         }
 
+        //Home/AddUserToRole
         [Authorize(Roles="Admin")]
         public IActionResult AddUserToRole()
         {
@@ -127,6 +133,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
             
         }
 
+        //Home/ShowAndDeleteQuestions
         [Authorize(Roles = "Admin")]
         public IActionResult ShowAndDeleteQuestions()
         {
