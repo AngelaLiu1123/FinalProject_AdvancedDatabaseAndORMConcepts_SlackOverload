@@ -30,6 +30,11 @@
                 <textarea id="summernote" name="body" class="form-control"  style="width:750px;"></textarea>
             </div>
             @Html.LabelFor(m => m.SelectedTags,"Please Select your Tags") <br/>
+            @*@Html.ListBoxFor-->return a multi-selection element
+                Model => model.property: It contains the ID of selected items; 
+                ItemList: It is a list of items 
+                Object HtmlAttributes: It sets extra attributes to ListBox Control
+            *@
             @Html.ListBoxFor(m => m.SelectedTags, Model.AllTags, new {@class="chosen", multiple="multiple", style="width:150px;"})
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

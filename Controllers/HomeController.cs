@@ -174,21 +174,30 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
         [HttpPost]
         public IActionResult PostNewQuestion(string title, string body, TagVM tagVm)
         {
-            string currentUserName = User.Identity.Name;
-            ApplicationUser currentUser = _db.Users.First(u => u.UserName == currentUserName);
-            string userId = currentUser.Id;
-
-            Question newQuestion = new Question(title, body, userId);
-            _db.Questions.Add(newQuestion);
-            foreach (var tag in tagVm.SelectedTags)
+            try
             {
-                QuestionTag questionTag = new QuestionTag(newQuestion.Id, int.Parse(tag));
-                newQuestion.QuestionTags.Add(questionTag);
+                string currentUserName = User.Identity.Name;
+                ApplicationUser currentUser = _db.Users.First(u => u.UserName == currentUserName);
+                string userId = currentUser.Id;
+
+                Question newQuestion = new Question(title, body, userId);
+                _db.Questions.Add(newQuestion);
+                foreach (var tag in tagVm.SelectedTags)
+                {
+                    QuestionTag questionTag = new QuestionTag(newQuestion.Id, int.Parse(tag));
+                    newQuestion.QuestionTags.Add(questionTag);
+                }
+
+                _db.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+
+                return RedirectToAction("Error", new { message = ex.Message });
             }
             
-            _db.SaveChanges();
-
-            return RedirectToAction("Index");
         }
 
         public IActionResult QuestionDetails(int questionId, string? message)
@@ -286,37 +295,53 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Controllers
         [HttpPost]
         public async Task<IActionResult> MarkAsCorrect(int questionId, int answerId)
         {
-            //show the correct answer on the top of answer list and have some indicator
-            ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            Question questionToMark = _db.Questions.Include(q => q.User).First(q => q.Id == questionId);
-            ApplicationUser userOfQuestion = questionToMark.User;
-            if (userOfQuestion.Id != currentUser.Id)
+            try
             {
-                return RedirectToAction("QuestionDetails",
-                    new
-                    {
-                        questionId = questionId,
-                        message = "Sorry! You can't mark the answer as correct since you are not the question onwer.",
-                    });
+                //show the correct answer on the top of answer list and have some indicator
+                ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                Question questionToMark = _db.Questions.Include(q => q.User).First(q => q.Id == questionId);
+                ApplicationUser userOfQuestion = questionToMark.User;
+                if (userOfQuestion.Id != currentUser.Id)
+                {
+                    return RedirectToAction("QuestionDetails",
+                        new
+                        {
+                            questionId = questionId,
+                            message = "Sorry! You can't mark the answer as correct since you are not the question onwer.",
+                        });
+                }
+                Answer correctAnswer = _db.Answers.Include(a => a.Question).ThenInclude(q => q.User).First(a => a.Id == answerId);
+                correctAnswer.IsCorrect = true;
+                _db.SaveChanges();
+                return RedirectToAction("QuestionDetails", new { questionId = questionId });
             }
-            Answer correctAnswer = _db.Answers.Include(a => a.Question).ThenInclude(q => q.User).First(a => a.Id == answerId);
-            correctAnswer.IsCorrect = true;
-            _db.SaveChanges();
-            return RedirectToAction("QuestionDetails", new { questionId = questionId });
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = ex.Message });
+            }
+
         }
 
         [HttpPost]
         public async Task<IActionResult> PostAAnswer(int questionId, string answerContent)
         {
-            ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
-            Answer newAnswer = new Answer(questionId, answerContent, currentUser.Id);
-            if(newAnswer != null)
+            try
             {
-                _db.Answers.Add(newAnswer);
-                _db.SaveChanges();
+                ApplicationUser currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+                Answer newAnswer = new Answer(questionId, answerContent, currentUser.Id);
+                if (newAnswer != null)
+                {
+                    _db.Answers.Add(newAnswer);
+                    _db.SaveChanges();
+                }
+
+                return RedirectToAction("QuestionDetails", new { questionId = questionId });
             }
-            
-            return RedirectToAction("QuestionDetails", new { questionId = questionId });
+            catch (Exception ex)
+            {
+                return RedirectToAction("Error", new { message = ex.Message });
+            }
+
         }
 
         [HttpPost]
