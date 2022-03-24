@@ -55,7 +55,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Data.Migrati
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Answers");
+                    b.ToTable("Answers", (string)null);
                 });
 
             modelBuilder.Entity("FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models.ApplicationUser", b =>
@@ -156,7 +156,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Data.Migrati
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models.Question", b =>
@@ -194,7 +194,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Data.Migrati
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("Questions", (string)null);
                 });
 
             modelBuilder.Entity("FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models.QuestionTag", b =>
@@ -217,7 +217,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Data.Migrati
 
                     b.HasIndex("TagId");
 
-                    b.ToTable("QuestionTags");
+                    b.ToTable("QuestionTags", (string)null);
                 });
 
             modelBuilder.Entity("FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Models.Tag", b =>
@@ -234,7 +234,7 @@ namespace FinalProject_AdvancedDatabaseAndORMConcepts_SlackOverload.Data.Migrati
 
                     b.HasKey("Id");
 
-                    b.ToTable("Tags");
+                    b.ToTable("Tags", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
